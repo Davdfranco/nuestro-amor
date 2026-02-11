@@ -20,9 +20,10 @@ body{
     align-items:center;
     background: linear-gradient(to top, #020111, #3a1c71);
     overflow:hidden;
+    transition:0.5s;
 }
 
-/* Contenedor vertical */
+/* Contenedor vertical tipo historia */
 .story{
     width:100%;
     max-width:420px;
@@ -50,12 +51,6 @@ body{
     100%{ transform:translateY(0); }
 }
 
-/* Flecha */
-.arrow{
-    font-size:30px;
-    display:block;
-}
-
 /* Árbol */
 .tree{
     position:relative;
@@ -76,16 +71,16 @@ body{
     border-radius:10px;
 }
 
-/* Corazón */
+/* Corazón perfecto */
 .heart{
     position:absolute;
     top:20px;
     left:50%;
-    transform:translateX(-50%) scale(1);
-    width:180px;
-    height:160px;
+    transform:translateX(-50%);
+    width:160px;
+    height:140px;
     background:#ff2e63;
-    clip-path: path("M 90 30 C 90 -10, 0 -10, 0 50 C 0 110, 90 140, 90 160 C 90 140, 180 110, 180 50 C 180 -10, 90 -10, 90 30 Z");
+    clip-path: path("M 80 25 C 80 -10, 0 -10, 0 50 C 0 110, 80 130, 80 140 C 80 130, 160 110, 160 50 C 160 -10, 80 -10, 80 25 Z");
     animation: latido 1.5s infinite;
     box-shadow:0 0 30px #ff2e63;
 }
@@ -128,6 +123,26 @@ button{
     cursor:pointer;
 }
 
+/* Botón volver */
+.btn-volver{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background: linear-gradient(45deg,#ff4d6d,#ff85a1);
+    color:white;
+    padding:12px 25px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.btn-volver:hover{
+    transform:translateX(-50%) scale(1.05);
+}
+
 /* Brillitos */
 .sparkle{
     position:absolute;
@@ -135,13 +150,13 @@ button{
     height:5px;
     background:white;
     border-radius:50%;
-    animation: sparkle 4s infinite;
+    animation: sparkle 4s linear infinite;
 }
 
 @keyframes sparkle{
     0%{ opacity:0; transform:translateY(0); }
     50%{ opacity:1; }
-    100%{ opacity:0; transform:translateY(-100px); }
+    100%{ opacity:0; transform:translateY(-120px); }
 }
 </style>
 </head>
@@ -150,10 +165,8 @@ button{
 
 <div class="story">
 
-    <!-- Texto indicador -->
     <div class="click-hint" id="indicacion">
-        💗 Dale click aquí 💗
-        <span class="arrow">⬇️</span>
+        💗 Dale click al corazón 💗
     </div>
 
     <div class="tree" onclick="abrirCarta()">
@@ -174,35 +187,45 @@ button{
 
 </div>
 
+<a href="index.html" class="btn-volver">💌 Volver a la carta principal</a>
+
 <audio id="musica" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 let musica = document.getElementById("musica");
+let musicaIniciada = false;
 
 function abrirCarta(){
     document.getElementById("carta").classList.add("show");
     document.getElementById("indicacion").style.display = "none";
-    musica.play();
+
+    // Esto asegura que funcione en celular
+    if(!musicaIniciada){
+        musica.play().catch(()=>{});
+        musicaIniciada = true;
+    }
 }
 
 function cerrarCarta(){
     document.getElementById("carta").classList.remove("show");
 }
 
-/* Brillitos */
+/* Brillitos optimizados */
 setInterval(()=>{
     let sparkle = document.createElement("div");
     sparkle.classList.add("sparkle");
-    sparkle.style.left = Math.random()*300 + "px";
-    sparkle.style.top = Math.random()*500 + "px";
+
+    sparkle.style.left = Math.random()*window.innerWidth + "px";
+    sparkle.style.top = Math.random()*window.innerHeight + "px";
+
     document.body.appendChild(sparkle);
 
     setTimeout(()=>{
         sparkle.remove();
     },4000);
-},500);
+},600);
 </script>
 
 </body>
