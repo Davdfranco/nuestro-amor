@@ -143,7 +143,43 @@ button{
 
 </style>
 </head>
+
 <body>
+
+<!-- 🔐 PANTALLA DE BLOQUEO -->
+<div id="bloqueo" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(to bottom,#1b1b2f,#162447);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+color:white;
+text-align:center;
+padding:20px;
+">
+
+<h2>💖 Nuestro espacio secreto 💖</h2>
+<p>Ingresa la contraseña para continuar</p>
+
+<input type="password" id="clave" placeholder="Contraseña"
+style="padding:10px;border-radius:20px;border:none;margin-top:15px;text-align:center;">
+
+<button onclick="verificarClave()"
+style="margin-top:15px;padding:10px 20px;border:none;border-radius:20px;background:#ff4d6d;color:white;">
+Entrar 💌
+</button>
+
+<p id="error" style="color:#ff8080;margin-top:10px;display:none;">
+Clave incorrecta 💔
+</p>
+
+</div>
 
 <div class="card">
 
@@ -166,7 +202,6 @@ Mi amor por ti comenzó hace...
 
 <button onclick="openLetter()">Abrir carta 💌</button>
 
-<!-- 🔥 NUEVO BOTÓN PARA IR A LA OTRA PÁGINA -->
 <a href="arbol.html">
 <button>Ver nuestro árbol especial 🌳💖</button>
 </a>
@@ -254,8 +289,19 @@ function closeLetter(){
 document.getElementById("letter").classList.remove("open");
 }
 
+// 🔐 FUNCIÓN DE CONTRASEÑA
+function verificarClave(){
+    const claveCorrecta = "30042022"; // Cambia la contraseña aquí
+    const claveIngresada = document.getElementById("clave").value;
+
+    if(claveIngresada === claveCorrecta){
+        document.getElementById("bloqueo").style.display = "none";
+    }else{
+        document.getElementById("error").style.display = "block";
+    }
+}
+
 </script>
 
 </body>
 </html>
-
