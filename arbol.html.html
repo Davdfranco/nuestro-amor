@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Árbol 💗</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(to top, #020111, #3a1c71);
+    overflow:hidden;
+}
+
+/* Contenedor vertical */
+.story{
+    width:100%;
+    max-width:420px;
+    height:100vh;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+/* Texto indicador */
+.click-hint{
+    position:absolute;
+    top:40px;
+    color:white;
+    font-size:20px;
+    text-align:center;
+    animation: flotar 1.5s infinite;
+}
+
+@keyframes flotar{
+    0%{ transform:translateY(0); }
+    50%{ transform:translateY(-10px); }
+    100%{ transform:translateY(0); }
+}
+
+/* Flecha */
+.arrow{
+    font-size:30px;
+    display:block;
+}
+
+/* Árbol */
+.tree{
+    position:relative;
+    width:200px;
+    height:300px;
+    cursor:pointer;
+}
+
+/* Tronco */
+.trunk{
+    width:30px;
+    height:120px;
+    background:#4b2e1e;
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    border-radius:10px;
+}
+
+/* Corazón */
+.heart{
+    position:absolute;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) scale(1);
+    width:180px;
+    height:160px;
+    background:#ff2e63;
+    clip-path: path("M 90 30 C 90 -10, 0 -10, 0 50 C 0 110, 90 140, 90 160 C 90 140, 180 110, 180 50 C 180 -10, 90 -10, 90 30 Z");
+    animation: latido 1.5s infinite;
+    box-shadow:0 0 30px #ff2e63;
+}
+
+@keyframes latido{
+    0%{ transform:translateX(-50%) scale(1); }
+    50%{ transform:translateX(-50%) scale(1.08); }
+    100%{ transform:translateX(-50%) scale(1); }
+}
+
+/* Carta */
+.letter{
+    position:absolute;
+    bottom:-100%;
+    width:85%;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    transition:1s;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.letter.show{
+    bottom:80px;
+}
+
+.letter h2{
+    color:#ff2e63;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:#ff2e63;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* Brillitos */
+.sparkle{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:white;
+    border-radius:50%;
+    animation: sparkle 4s infinite;
+}
+
+@keyframes sparkle{
+    0%{ opacity:0; transform:translateY(0); }
+    50%{ opacity:1; }
+    100%{ opacity:0; transform:translateY(-100px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="story">
+
+    <!-- Texto indicador -->
+    <div class="click-hint" id="indicacion">
+        💗 Dale click aquí 💗
+        <span class="arrow">⬇️</span>
+    </div>
+
+    <div class="tree" onclick="abrirCarta()">
+        <div class="heart"></div>
+        <div class="trunk"></div>
+    </div>
+
+    <div class="letter" id="carta">
+        <h2>Para Ti 💌</h2>
+        <p>
+        Desde que llegaste, mi mundo floreció 🌸<br><br>
+        Este árbol representa lo que somos:<br>
+        raíces fuertes, amor sincero y un corazón que late por siempre 💗<br><br>
+        Te amo más de lo que las palabras pueden decir.
+        </p>
+        <button onclick="cerrarCarta()">Cerrar</button>
+    </div>
+
+</div>
+
+<audio id="musica" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let musica = document.getElementById("musica");
+
+function abrirCarta(){
+    document.getElementById("carta").classList.add("show");
+    document.getElementById("indicacion").style.display = "none";
+    musica.play();
+}
+
+function cerrarCarta(){
+    document.getElementById("carta").classList.remove("show");
+}
+
+/* Brillitos */
+setInterval(()=>{
+    let sparkle = document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.style.left = Math.random()*300 + "px";
+    sparkle.style.top = Math.random()*500 + "px";
+    document.body.appendChild(sparkle);
+
+    setTimeout(()=>{
+        sparkle.remove();
+    },4000);
+},500);
+</script>
+
+</body>
+</html>
